@@ -11,7 +11,7 @@ public abstract class EstadoBasePlayer : EstadoRaiz
         Debug.LogError("Inicie o estado com IniciarEstadoPlayer");
     }
 
-    public void IniciarEstadoPlayer(ScriptPlayer player)
+    public virtual void IniciarEstadoPlayer(ScriptPlayer player)
     {
         this.player= player;
     }

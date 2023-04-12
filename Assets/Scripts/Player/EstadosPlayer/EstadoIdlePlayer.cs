@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class EstadoIdlePlayer : EstadoAtivoBasePlayer
 {
+
+    public override void IniciarEstadoPlayer(ScriptPlayer player)
+    {
+        base.IniciarEstadoPlayer(player);
+        player.GetRigidbody2D.velocity=new Vector2(0,player.GetRigidbody2D.velocity.y);
+        player.GetRigidbody2D.sharedMaterial=player.GetMaterialFisicoParado;
+    }
     public override void AtualizarEstado()
     {
         base.AtualizarEstado();
-        Debug.Log("a");
+        if(Input.GetKeyDown(player.GetMapeadorDeBotoes.GetBotaoPulo))
+        {
+            player.GetRigidbody2D.AddForce(new Vector2(0,player.GetForcaPulo),ForceMode2D.Impulse);
+            player.TrocaEstadoPlayer(new EstadoPuloPlayer());
+        }
     }
 }

@@ -334,9 +334,8 @@ GameObject:
   - component: {fileID: 1847548144}
   - component: {fileID: 1847548143}
   - component: {fileID: 1847548142}
-  - component: {fileID: 1847548146}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Chao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,19 +432,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.371}
---- !u!114 &1847548146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847548141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ae726c0f037c0458aa4a3c051aed3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controldadorDeCenaPlayer: {fileID: 11400000, guid: 713936cf5b3f54946b2c70b8b61766d0, type: 2}
 --- !u!1 &2134288094
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,9 +445,10 @@ GameObject:
   - component: {fileID: 2134288097}
   - component: {fileID: 2134288096}
   - component: {fileID: 2134288095}
+  - component: {fileID: 2134288100}
   m_Layer: 0
-  m_Name: Capsule
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,7 +485,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: caffe00d474de78498d9b27e9f4bd2ba, type: 2}
+  m_Material: {fileID: 6200000, guid: c7f06bfd26cd3a241ab03c98a16d71ae, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -568,3 +555,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2134288100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134288094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ae726c0f037c0458aa4a3c051aed3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidadeDeMovimento: 5
+  forcaPulo: 10
+  olhandoParaEsquerda: 0
+  distanciaChecagemPulo: 0.13
+  controldadorDeCenaPlayer: {fileID: 11400000, guid: 713936cf5b3f54946b2c70b8b61766d0, type: 2}
+  mapeadorDeBotoes: {fileID: 11400000, guid: 2563b72794b26044e98fd609d890714f, type: 2}
+  materialFisicoParado: {fileID: 6200000, guid: caffe00d474de78498d9b27e9f4bd2ba, type: 2}
+  materialFisicoAndando: {fileID: 6200000, guid: c7f06bfd26cd3a241ab03c98a16d71ae, type: 2}
+  rb: {fileID: 0}
+  col: {fileID: 2134288095}
