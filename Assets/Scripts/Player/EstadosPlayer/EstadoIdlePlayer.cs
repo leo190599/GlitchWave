@@ -18,6 +18,11 @@ public class EstadoIdlePlayer : EstadoAtivoBasePlayer
         {
             player.GetRigidbody2D.AddForce(new Vector2(0,player.GetForcaPulo),ForceMode2D.Impulse);
             player.TrocaEstadoPlayer(new EstadoPuloPlayer());
+            return;
+        }
+        if(Input.GetAxisRaw(player.GetMapeadorDeBotoes.GetEixoDeMovimentoHorizontal)!=0)
+        {
+            player.TrocaEstadoPlayer(new EstadoAndandoPlayer());
         }
     }
 }

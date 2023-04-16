@@ -10,11 +10,17 @@ public class ScriptPlayer : MonoBehaviour
     [SerializeField]
     private float forcaPulo=10;
     [SerializeField]
-    private bool olhandoParaEsquerda=false;
+    private bool olhandoParaDireita=true;
+
+    [SerializeField]
+    [Range(0f,1f)]
+    private float perdaDeMovimentoNoAr=0f;
 
     [Header("Parametros Debug")]
     [SerializeField]
     private float distanciaChecagemPulo=1;
+    [SerializeField]
+    private GameObject meshPersonagem;
     private List<RaycastHit2D>raycastsPulo;
 
     [Header("Scriptable objects")]
@@ -52,13 +58,34 @@ public class ScriptPlayer : MonoBehaviour
         {
             estadoPlayerAtual.AtualizarEstado();
         }
-        raycastsPulo.Clear();
+        //Debug.Log(estadoPlayerAtual);
     }
 
     void FixedUpdate()
     {   if(controldadorDeCenaPlayer.getEstadoCena==ControladorDeCena.TipoEstadoCena.jogando)
         {
             estadoPlayerAtual.AtualizarEstadoFixado();
+            if(estadoPlayerAtual is EstadoAtivoBasePlayer && !(estadoPlayerAtual is EstadoNoArBasePlayer))
+            {
+                rb.Cast(Vector2.down,raycastsPulo,distanciaChecagemPulo);
+                if(raycastsPulo.Count!=0)
+                {
+                    foreach(RaycastHit2D r in raycastsPulo)
+                    {
+                        if(r.collider.tag!="Player")
+                        {
+                            raycastsPulo.Clear();
+                            return;
+                        }
+                    }
+                    TrocaEstadoPlayer(new EstadoPuloPlayer());
+                }
+                else
+                {
+                    TrocaEstadoPlayer(new EstadoPuloPlayer());
+                }
+                raycastsPulo.Clear();
+            }
         }
     }
     void OnDrawGizmosSelected()
@@ -72,7 +99,19 @@ public class ScriptPlayer : MonoBehaviour
         estadoPlayerAtual=novoEstado;
         estadoPlayerAtual.IniciarEstadoPlayer(this);
     }
-
+    public void RodarPersonagem(bool olhandoParaDireita)
+    {
+        if(olhandoParaDireita)
+        {
+            this.olhandoParaDireita=true;
+            meshPersonagem.transform.eulerAngles=new Vector3(0,90,0);
+        }
+        else
+        {
+            this.olhandoParaDireita=false;
+            meshPersonagem.transform.eulerAngles=new Vector3(0,270,0);
+        }
+    }
     public PhysicsMaterial2D GetMaterialFisicoParado=> materialFisicoParado;
     public PhysicsMaterial2D GetMaterialFisicoAndando=>materialFisicoAndando;
     public MapeadorDeBotoes GetMapeadorDeBotoes=>mapeadorDeBotoes;
@@ -80,8 +119,8 @@ public class ScriptPlayer : MonoBehaviour
     public CapsuleCollider2D GetCapsuleCollider2D=>col;
     public float GetVelocidadeDeMovimento=>velocidadeDeMovimento;
     public float GetForcaPulo=>forcaPulo;
-    public bool GetOlhandoParaEsquerda=>olhandoParaEsquerda;
-
+    public bool GetOlhandoParaDireita=>olhandoParaDireita;
+    public float GetPerdaDeMovimentoNoAr=>perdaDeMovimentoNoAr;
     public List<RaycastHit2D> GetRaycastsPulo=>raycastsPulo;
     public float GetDistanciaChecagemPulo=>distanciaChecagemPulo;
 }
