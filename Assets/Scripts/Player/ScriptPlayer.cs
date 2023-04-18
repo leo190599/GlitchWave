@@ -41,12 +41,19 @@ public class ScriptPlayer : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField]
     private CapsuleCollider2D col;
+    
+    private Vector3 rotacaoAlvo;
     // Start is called before the first frame update
     void Start()
     {
         raycastsPulo=new List<RaycastHit2D>();
         rb=GetComponent<Rigidbody2D>();
         col=GetComponent<CapsuleCollider2D>();
+
+        //teste
+        rotacaoAlvo=meshPersonagem.transform.eulerAngles;
+        //teste
+
         estadoPlayerAtual=new EstadoIdlePlayer();
         estadoPlayerAtual.IniciarEstadoPlayer(this);
     }
@@ -65,6 +72,9 @@ public class ScriptPlayer : MonoBehaviour
     {   if(controldadorDeCenaPlayer.getEstadoCena==ControladorDeCena.TipoEstadoCena.jogando)
         {
             estadoPlayerAtual.AtualizarEstadoFixado();
+            
+            meshPersonagem.transform.eulerAngles=new Vector3(0,Mathf.Lerp(meshPersonagem.transform.eulerAngles.y,rotacaoAlvo.y,.5f),0);
+            
             if(estadoPlayerAtual is EstadoAtivoBasePlayer && !(estadoPlayerAtual is EstadoNoArBasePlayer))
             {
                 rb.Cast(Vector2.down,raycastsPulo,distanciaChecagemPulo);
@@ -103,13 +113,13 @@ public class ScriptPlayer : MonoBehaviour
     {
         if(olhandoParaDireita)
         {
+            rotacaoAlvo.y=90;
             this.olhandoParaDireita=true;
-            meshPersonagem.transform.eulerAngles=new Vector3(0,90,0);
         }
         else
         {
+            rotacaoAlvo.y=270;
             this.olhandoParaDireita=false;
-            meshPersonagem.transform.eulerAngles=new Vector3(0,270,0);
         }
     }
     public PhysicsMaterial2D GetMaterialFisicoParado=> materialFisicoParado;
