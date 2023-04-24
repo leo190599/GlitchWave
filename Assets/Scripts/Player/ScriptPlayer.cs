@@ -18,6 +18,8 @@ public class ScriptPlayer : MonoBehaviour
 
     [Header("Parametros Debug")]
     [SerializeField]
+    private InformacoesPlayer informacoesPlayer;
+    [SerializeField]
     private float distanciaChecagemPulo=1;
     [SerializeField]
     private GameObject meshPersonagem;
