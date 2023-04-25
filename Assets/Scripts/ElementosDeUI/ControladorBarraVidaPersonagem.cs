@@ -28,7 +28,10 @@ public class ControladorBarraVidaPersonagem : MonoBehaviour
     }
     void OnEnable()
     {
-        AlterarProgresso();
+        if(controladorBarraDeProgresso!=null)
+        {
+            AlterarProgresso();
+        }
         informacoesPlayer.EventosLevarDano+=AlterarProgresso;
         informacoesPlayer.EventosCura+=AlterarProgresso;
     }

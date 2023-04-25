@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ScriptPlayer : MonoBehaviour
 {
     [Header("Parametros Design")]
@@ -48,6 +48,8 @@ public class ScriptPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controldadorDeCenaPlayer.TrocarEstadoAtual(ControladorDeCena.TipoEstadoCena.jogando);
+        informacoesPlayer.Curar(informacoesPlayer.GetVidaMaxima);
         raycastsPulo=new List<RaycastHit2D>();
         rb=GetComponent<Rigidbody2D>();
         col=GetComponent<CapsuleCollider2D>();
@@ -66,8 +68,35 @@ public class ScriptPlayer : MonoBehaviour
         if(controldadorDeCenaPlayer.getEstadoCena==ControladorDeCena.TipoEstadoCena.jogando)
         {
             estadoPlayerAtual.AtualizarEstado();
+            if(Input.GetKeyDown(mapeadorDeBotoes.GetBotaoPause))
+            {
+                controldadorDeCenaPlayer.TrocarEstadoAtual(ControladorDeCena.TipoEstadoCena.pausado);
+            }
         }
+        else if(controldadorDeCenaPlayer.getEstadoCena==ControladorDeCena.TipoEstadoCena.pausado)
+        {
+            if(Input.GetKeyDown(mapeadorDeBotoes.GetBotaoPause))
+            {
+                controldadorDeCenaPlayer.TrocarEstadoAtual(ControladorDeCena.TipoEstadoCena.jogando);
+            }
+        }
+        else if(controldadorDeCenaPlayer.getEstadoCena==ControladorDeCena.TipoEstadoCena.morreu)
+        {
+            if(Input.GetKeyDown(mapeadorDeBotoes.GetBotaoPause))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+        //Mudar depois
         
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            informacoesPlayer.ReceberDano(10);
+        }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            informacoesPlayer.Curar(10);
+        }
         //Debug.Log(estadoPlayerAtual);
     }
 
@@ -106,6 +135,14 @@ public class ScriptPlayer : MonoBehaviour
         Gizmos.DrawLine(col.bounds.center,new Vector3(col.bounds.center.x,col.bounds.min.y-distanciaChecagemPulo,col.bounds.min.z));
     }
 
+    void OnEnable()
+    {
+        informacoesPlayer.EventosMorte+=Morrer;
+    }
+    void OnDisable()
+    {
+        informacoesPlayer.EventosMorte-=Morrer;
+    }
     public void ReceberDano(float quantidadeDeDano)
     {
         informacoesPlayer.ReceberDano(quantidadeDeDano);
@@ -113,6 +150,11 @@ public class ScriptPlayer : MonoBehaviour
     public void Curar(float quantidadeDeCura)
     {
         informacoesPlayer.Curar(quantidadeDeCura);
+    }
+
+    public void Morrer()
+    {
+        controldadorDeCenaPlayer.TrocarEstadoAtual(ControladorDeCena.TipoEstadoCena.morreu);
     }
 
     public void TrocaEstadoPlayer(EstadoBasePlayer novoEstado)

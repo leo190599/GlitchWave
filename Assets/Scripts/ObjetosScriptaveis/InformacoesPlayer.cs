@@ -17,6 +17,7 @@ public class InformacoesPlayer : ScriptableObject
 
     public float GetPorcentagemDeVida=>Mathf.Clamp(vidaAtual/vidaMaxima,0f,100f);
     public float GetVidaAtual=>Mathf.Clamp(vidaAtual,0,vidaMaxima);
+    public float GetVidaMaxima=>vidaMaxima;
     public void Curar(float quantidadeDeCura)
     {
         vidaAtual=Mathf.Clamp(vidaAtual+quantidadeDeCura,0,vidaMaxima);
@@ -32,7 +33,7 @@ public class InformacoesPlayer : ScriptableObject
             {
                 EventosLevarDano.Invoke();
             }
-        if(vidaAtual<0 && EventosLevarDano!=null)
+        if(vidaAtual<=0 && EventosMorte!=null)
         {
 
             EventosMorte.Invoke();
