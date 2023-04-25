@@ -67,6 +67,7 @@ public class ScriptPlayer : MonoBehaviour
         {
             estadoPlayerAtual.AtualizarEstado();
         }
+        
         //Debug.Log(estadoPlayerAtual);
     }
 
@@ -103,6 +104,15 @@ public class ScriptPlayer : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.DrawLine(col.bounds.center,new Vector3(col.bounds.center.x,col.bounds.min.y-distanciaChecagemPulo,col.bounds.min.z));
+    }
+
+    public void ReceberDano(float quantidadeDeDano)
+    {
+        informacoesPlayer.ReceberDano(quantidadeDeDano);
+    }
+    public void Curar(float quantidadeDeCura)
+    {
+        informacoesPlayer.Curar(quantidadeDeCura);
     }
 
     public void TrocaEstadoPlayer(EstadoBasePlayer novoEstado)

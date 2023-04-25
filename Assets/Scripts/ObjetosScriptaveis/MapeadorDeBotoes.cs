@@ -9,7 +9,10 @@ public class MapeadorDeBotoes : ScriptableObject
     private string eixoDeMovimentoHorizontal="Horizontal";
    [SerializeField]
    private KeyCode botaoPulo=KeyCode.Space;
+   [SerializeField]
+   private KeyCode botaoPause=KeyCode.Escape;
 
    public string GetEixoDeMovimentoHorizontal=>eixoDeMovimentoHorizontal;
    public KeyCode GetBotaoPulo=>botaoPulo;
+   public KeyCode GetBotaoPause=>botaoPause;
 }

@@ -11,21 +11,31 @@ public class InformacoesPlayer : ScriptableObject
     [SerializeField]
     private float vidaAtual=100;
 
-    public float GetPorcentagemDeVida=>Mathf.Clamp(vidaAtual/vidaMaxima,0f,100f);
-    public float GetVidaAtual=>Mathf.Clamp(vidaAtual,0,vidaMaxima);
-    public void ReceberDano(float quantidadeDeDano)
-    {
-        vidaAtual-=quantidadeDeDano;
-        if(vidaAtual>0)
-        {
-            EventosLevarDano.Invoke();
-        }
-        else
-        {
-            EventosMorte.Invoke();
-        }
-    }
     public UnityAction EventosLevarDano;
     public UnityAction EventosCura;
     public UnityAction EventosMorte;
+
+    public float GetPorcentagemDeVida=>Mathf.Clamp(vidaAtual/vidaMaxima,0f,100f);
+    public float GetVidaAtual=>Mathf.Clamp(vidaAtual,0,vidaMaxima);
+    public void Curar(float quantidadeDeCura)
+    {
+        vidaAtual=Mathf.Clamp(vidaAtual+quantidadeDeCura,0,vidaMaxima);
+        if(EventosCura!=null)
+        {
+            EventosCura.Invoke();
+        }
+    }
+    public void ReceberDano(float quantidadeDeDano)
+    {
+        vidaAtual-=quantidadeDeDano;
+        if(EventosLevarDano!=null)
+            {
+                EventosLevarDano.Invoke();
+            }
+        if(vidaAtual<0 && EventosLevarDano!=null)
+        {
+
+            EventosMorte.Invoke();
+        }
+    }
 }
