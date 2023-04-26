@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eixoDeMovimentoHorizontal: Horizontal
   botaoPulo: 32
+  botaoPause: 27
